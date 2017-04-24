@@ -4,11 +4,11 @@
     Author     : Adam Hayes
 --%>
 
-<%@page import="ShoppingCart.Book"%>
+<%@page import="Objects.Book"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <%@page import = "ShoppingCart.ShoppingCart, java.text.DecimalFormat" %>
+    <%@page import = "Objects.ShoppingCart, java.text.DecimalFormat" %>
     <%  DecimalFormat df = new DecimalFormat("#.00");
         ShoppingCart cart = new ShoppingCart();
         if (session.getAttribute("cart") != null) {
@@ -44,7 +44,7 @@
             <tbody>
                     <%for (int i = 0; i < cart.size(); i++) {
                         a = cart.getBook(i);
-                        isbn = a.getIsbn();
+                        isbn = a.getIsbnForCovers();
                         bookType = cart.getBookType(index);
                         out.println("<tr>");
                         switch (bookType) {

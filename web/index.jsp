@@ -3,7 +3,6 @@
 <%@ page import="Objects.Book" %>
 <%@ page import="Objects.ObjectIO" %>
 <%@ page import="Objects.BooksDatabase" %>
-<%@ page import="org.apache.commons.io.IOUtils" %>
 <%@ page import="java.io.*" %><%--
   Created by IntelliJ IDEA.
   User: Myles
@@ -17,7 +16,7 @@
     <title>Bookstore Homepage</title>
 </head>
 <body>
-	<img src="Kennesaw_State_University.png" width="300" height="100">
+	<img src="image/searchImages/Kennesaw_State_University.png" width="300" height="100">
 
 	<% for (int i = 0; i < 5; i++) {
 		out.println("</br>");

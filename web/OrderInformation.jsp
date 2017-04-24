@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="ShoppingCart.ShoppingCart" %>
+<%@ page import="Objects.ShoppingCart" %>
 <html>
 <% if (session.getAttribute("cart") != null) {
     ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-}%>
+    }
+%>
 <head>
     <title>Order Information - Checkout</title>
 </head>
