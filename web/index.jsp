@@ -10,9 +10,15 @@ To change this template use File | Settings | File Templates.
     <title>Bookstore Homepage</title>
 </head>
 <body>
-<img src="image/searchImages/Kennesaw_State_University.png" width="300" height="100">
-
-<% for (int i = 0; i < 5; i++) {
+<tr>
+    <td width="75%">
+        <img src="image/images/ksu (1).png" width="300" height="100">
+    </td>
+    <td width="25%">
+        <a href="shoppingCart.jsp"><img src="image/images/cart.png" alt="cart" width="80" height="80" align="right" /></a>
+    </td>
+</tr>
+<% for (int i = 0; i < 10; i++) {
     out.println("</br>");
 } %>
 
@@ -32,12 +38,17 @@ To change this template use File | Settings | File Templates.
 
 
     </form>
+    <% for (int i = 0; i < 18; i++) {
+        out.println("</br>");
+    } %>
+    <a href="aboutUs.jsp">About Us</a>
 </div>
 <style>
     .SearchForms {
         text-align: center;
         box-shadow: #2c4557;
     }
+
 </style>
 </br>
 

@@ -301,14 +301,26 @@ public class ImportSpreadsheet {
         return isbnList;
     }
 
+    public TreeMap<String, Book> importToAuthorList() {
+        TreeMap<String, Book> authorList = new TreeMap<>();
+        for (int i = 0; i < this.bookList.size(); i++) {
+            String author = "";
+            for (int j = 0; j < bookList.get(i).getAuthor().length; j++) {
+                author += bookList.get(i).getAuthor()[j] + ", ";
+            }
+            authorList.put(author, this.bookList.get(i));
+        }
+
+        return authorList;
+    }
+
     public static void main(String[] args) {
 
         File file = new File("books.csv");
         //System.out.println(file.getAbsolutePath());
         ImportSpreadsheet importSpreadsheet = new ImportSpreadsheet(file);
         importSpreadsheet.importSpreadSheet();
-        TreeMap<String, ArrayList<Book>> professorList = importSpreadsheet.importToProfessorList();
-        new Search().printTreeMapBook(professorList);
+        importSpreadsheet.importToAuthorList();
         //System.out.println(courseList.toString());
 
         /*
