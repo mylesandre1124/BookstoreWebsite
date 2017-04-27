@@ -1,7 +1,5 @@
 package Objects;
 
-import Objects.Book;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -127,7 +125,7 @@ public class ShoppingCart {
         String returnSubtotalPrice = df.format(subtotalPrice);
         return returnSubtotalPrice;
     }
-    
+
     public String getCalcTax() {
         double taxPrice = subtotalPrice * tax;
         String returnTaxPrice = df.format(taxPrice);

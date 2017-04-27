@@ -73,8 +73,7 @@ public class ObjectIO {
         return object;
     }
 
-    public ArrayList<Book> reimport()
-    {
+    public ArrayList<Book> reimport() {
         ObjectIO objectIO = new ObjectIO(new File("books.bks"));
         ArrayList<Book> readBooks = (ArrayList<Book>) objectIO.readObject();
         return readBooks;

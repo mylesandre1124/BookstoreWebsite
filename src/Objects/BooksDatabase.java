@@ -2,7 +2,7 @@ package Objects;
 
 import Exceptions.StockException;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -15,16 +15,20 @@ public class BooksDatabase {
 
     public BooksDatabase(File bookFile) {
         this.bookFile = bookFile;
-        if(!this.bookFile.exists())
-        {
+        if (!this.bookFile.exists()) {
             this.books = new ImportSpreadsheet(new File("books.csv")).importSpreadSheet();
             ObjectIO objectIO = new ObjectIO(getBookFile());
             objectIO.writeObject(getBooks());
         }
-        if(getBookFile().exists())
-        {
+        if (getBookFile().exists()) {
             ObjectIO objectIO = new ObjectIO(getBookFile());
-            this.books = (ArrayList<Book>) objectIO.readObject();
+            try {
+                this.books = (ArrayList<Book>) objectIO.readObject();
+            }
+            catch (ClassCastException ex)
+            {
+                reset();
+            }
         }
     }
 
@@ -45,11 +49,9 @@ public class BooksDatabase {
         this.books = books;
     }
 
-    public void updateBook(Book book)
-    {
+    public void updateBook(Book book) {
         for (int i = 0; i < getBooks().size(); i++) {
-            if (getBooks().get(i).getIsbn() == book.getIsbn())
-            {
+            if (getBooks().get(i).getIsbn() == book.getIsbn()) {
                 getBooks().remove(i);
                 getBooks().add(i, book);
             }
@@ -61,11 +63,9 @@ public class BooksDatabase {
         objectIO.writeObject(getBooks());
     }
 
-    public void deleteBook(Book book)
-    {
+    public void deleteBook(Book book) {
         for (int i = 0; i < getBooks().size(); i++) {
-            if(getBooks().get(i).getIsbn() == book.getIsbn())
-            {
+            if (getBooks().get(i).getIsbn() == book.getIsbn()) {
                 getBooks().remove(i);
             }
         }
@@ -76,7 +76,13 @@ public class BooksDatabase {
         objectIO.writeObject(getBooks());
     }
 
-
+    public void reset() {
+        File books = new File("books.bks");
+        books.delete();
+        this.books = new ImportSpreadsheet(new File("books.csv")).importSpreadSheet();
+        ObjectIO objectIO = new ObjectIO(getBookFile());
+        objectIO.writeObject(getBooks());
+    }
 
     public static void main(String[] args) throws StockException {
         BooksDatabase booksDatabase = new BooksDatabase(new File("books.bks"));

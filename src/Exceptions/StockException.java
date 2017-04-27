@@ -16,13 +16,10 @@ public class StockException extends Exception {
         this.orderQuantity = orderQuantity;
     }
 
-    public boolean checkStock()
-    {
-        if(getActualStock() < getOrderQuantity()) {
+    public boolean checkStock() {
+        if (getActualStock() < getOrderQuantity()) {
             return false;
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
@@ -32,9 +29,7 @@ public class StockException extends Exception {
         if (inStock) {
             int stock = getActualStock() - getOrderQuantity();
             this.newStock = stock;
-        }
-        else
-        {
+        } else {
             throw this;
         }
     }

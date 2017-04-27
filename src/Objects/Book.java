@@ -1,4 +1,5 @@
 package Objects;
+
 import Exceptions.StockException;
 
 import java.io.Serializable;
@@ -7,11 +8,11 @@ import java.util.Arrays;
 /**
  * Created by Myles on 3/28/17.
  */
-public class Book implements Serializable{
+public class Book implements Serializable {
 
     private long isbn;
     private String bookName;
-    private String[] author;
+    private String author;
     private String semester;
     private String course;
     private int section;
@@ -45,11 +46,11 @@ public class Book implements Serializable{
         this.bookName = bookName;
     }
 
-    public String[] getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String[] author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
@@ -181,58 +182,48 @@ public class Book implements Serializable{
         this.isbnForCovers = isbnForCovers;
     }
 
-    public void changeNewQuantity(int orderQuantity) throws StockException
-    {
+    public void changeNewQuantity(int orderQuantity) throws StockException {
         StockException stockException = new StockException(getNewQuantity(), orderQuantity);
         stockException.changeStock();
         setNewQuantity(stockException.getNewStock());
     }
 
-    public void changeUsedQuantity(int orderQuantity) throws StockException
-    {
+    public void changeUsedQuantity(int orderQuantity) throws StockException {
         StockException stockException = new StockException(getUsedQuantity(), orderQuantity);
         stockException.changeStock();
         setUsedQuantity(stockException.getNewStock());
     }
 
-    public void changeRentalQuantity(int orderQuantity) throws StockException
-    {
+    public void changeRentalQuantity(int orderQuantity) throws StockException {
         StockException stockException = new StockException(getRentalQuantity(), orderQuantity);
         stockException.changeStock();
         setUsedQuantity(stockException.getNewStock());
     }
 
-    public boolean checkNewQuantity(int orderQuantity) throws StockException
-    {
+    public boolean checkNewQuantity(int orderQuantity) throws StockException {
         StockException stockException = new StockException(getNewQuantity(), orderQuantity);
         return stockException.checkStock();
     }
 
-    public boolean checkUsedQuantity(int orderQuantity) throws StockException
-    {
+    public boolean checkUsedQuantity(int orderQuantity) throws StockException {
         StockException stockException = new StockException(getUsedQuantity(), orderQuantity);
         return stockException.checkStock();
     }
 
-    public boolean checkRentalQuantity(int orderQuantity) throws StockException
-    {
+    public boolean checkRentalQuantity(int orderQuantity) throws StockException {
         StockException stockException = new StockException(getRentalQuantity(), orderQuantity);
         return stockException.checkStock();
     }
 
-    public boolean checkEbookQuantity()
-    {
-        if(getEbookQuantity() > 0)
-        {
+    public boolean checkEbookQuantity() {
+        if (getEbookQuantity() > 0) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
+
     /**
-     *
      * @return Book information string
      */
     @Override
@@ -240,7 +231,7 @@ public class Book implements Serializable{
         return "Book{" +
                 "isbn=" + isbn +
                 ", bookName='" + bookName + '\'' +
-                ", author=" + Arrays.toString(author) +
+                ", author=" + author +
                 ", semester='" + semester + '\'' +
                 ", course='" + course + '\'' +
                 ", section=" + section +
@@ -259,15 +250,13 @@ public class Book implements Serializable{
                 '}';
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Book book = new Book();
         book.setNewQuantity(6);
         try {
             boolean check = book.checkNewQuantity(4);
             System.out.println(check);
-        }
-        catch (StockException ex)
-        {
+        } catch (StockException ex) {
             ex.printStackTrace();
         }
     }
