@@ -21,7 +21,7 @@ public class Controller extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = "/SearchResultsPage.jsp";
         Search search = new Search();
-        String input = request.getParameter("search");
+        String input = request.getParameter("searchBox");
         PrintWriter out = response.getWriter();
         String type = request.getParameter("type");
         HttpSession session = request.getSession();

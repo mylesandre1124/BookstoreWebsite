@@ -37,10 +37,10 @@
         <%@page import = "java.io.File" %>
         <table width ="100%">
             <tr>
-                <td width="75%"><a href="Search.jsp"><img src="images/ksu (1).png" width="30%" height="100" alt="Kennesaw Logo"></a>                    
+                <td width="75%"><a href="Search.jsp"><img src="image/images/ksu (1).png" width="30%" height="100" alt="Kennesaw Logo"></a>
                 </td>
                 <td width="25%">
-                    <a href="shoppingCart.jsp"><img src="images/cart.png" alt="cart" width="80" height="80"/></a>
+                    <a href="shoppingCart.jsp"><img src="image/images/cart.png" alt="cart" width="80" height="80"/></a>
                 </td>
             </tr>
         </table>
@@ -270,7 +270,7 @@
         Searchlist.add(test11);
         
         //grabbing the search results from the session
-        ArrayList<Book> r = Searchlist;//(ArrayList<Book>)request.getSession().getAttribute("results");
+        ArrayList<Book> r = (ArrayList<Book>)request.getSession().getAttribute("results");
         SearchResults sr;
         if(r != null && r.size() > 0){//making sure it is not null
             sr= new SearchResults(r);
@@ -299,7 +299,7 @@
         String index = request.getParameter("search");//stores what page# for browsing the search results
         int indexNum =0;
         int pages;
-        int upperBound;
+        int upperBound = 0;
         pages = sr.getSize()/10;
         if(sr.getSize() % 10 != 0)
             pages++;
@@ -325,7 +325,7 @@
                                      
                 <%-- IMAGE --%>
                 <a href="BookDetails.jsp?get=<%out.println(i);%>">
-                <img style="display: block" src="images/<%out.println(isbn1+"-"+isbn2);%>.jpg" height="200" width="133" />
+                <img style="display: block" src="image/images/<%out.println(isbn1+"-"+isbn2);%>.jpg" height="200" width="133" />
                 </a>
                 
                 
@@ -423,9 +423,13 @@
             </td>
         </table>
             <%}}
-        else if(sr.getSize()>0){  
+        else if(sr.getSize()>0){
             indexNum =0;
-        for(int i=0; i<10;i++){
+                if(sr.getSize()<10)
+                upperBound = sr.getSize();
+                else
+                upperBound = 10;
+        for(int i=0; i<upperBound;i++){
             String isbn1;
             String isbn2;
             String ISBN = String.valueOf(sr.getResults().get(i).getIsbn());
@@ -441,7 +445,7 @@
                                      
                 <%-- IMAGE --%>
                 <a href="BookDetails.jsp?get=<%out.println(i);%>">
-                <img style="display: block" src="images/<%out.println(isbn1+"-"+isbn2);%>.jpg" height="200" width="133" />
+                <img style="display: block" src="image/images/<%out.println(isbn1+"-"+isbn2);%>.jpg" height="200" width="133" />
                 </a>
                 
                 

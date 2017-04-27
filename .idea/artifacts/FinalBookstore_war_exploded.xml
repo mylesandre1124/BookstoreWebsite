@@ -7,6 +7,9 @@
         <element id="directory" name="classes">
           <element id="module-output" name="FinalBookstore" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="net.sf.opencsv:opencsv:2.3" />
+        </element>
       </element>
     </root>
   </artifact>

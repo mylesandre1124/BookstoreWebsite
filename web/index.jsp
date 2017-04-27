@@ -18,7 +18,7 @@ To change this template use File | Settings | File Templates.
 
 <div class="SearchForms">
     <form name="searchForm" action="/Controller" method="post">
-        <input name="search" type="text" value="" width="100" height="400" size="175" align="center"/>
+        <input name="searchBox" type="text" value="" width="100" height="400" size="175" align="center"/>
 
         <select name="type">
             <option value="keyword">Keyword</option>
