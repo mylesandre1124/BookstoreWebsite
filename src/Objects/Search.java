@@ -83,7 +83,7 @@ public class Search {
         ArrayList<Book> searchResults = new ArrayList<>();
         TreeMap<String, Book> titles = searchByTitle(search);
         //searchBy
-        searchResults.add(searchByISBNString(search));
+        //searchResults.add(searchByISBNString(search));
         boolean isDigit = true;
         char[] chars = search.toCharArray();
         Character[] isbnconvert = new Character[chars.length];
@@ -287,10 +287,12 @@ public class Search {
         book = search.searchByISBN(9780132492676L);
         System.out.println(book.getBookName());*/
 
-
-        TreeMap<String, ArrayList<Book>> books  = search.searchByProfessor("a");
+        ArrayList<Book> books = search.populateKeywordSearch("chemistry");
+        for (int i = 0; i < books.size(); i++) {
+            System.out.println(books.get(i).getBookName());
+        }
         //ArrayList<Book> booklist = books.get("es2100");
-        search.printTreeMapBook(books);
+
         //Book book = search.searchByISBN(9789544007737L);
         //System.out.println(book.getBookName());
     }

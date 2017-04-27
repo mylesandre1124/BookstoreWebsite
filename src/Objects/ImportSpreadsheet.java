@@ -105,7 +105,7 @@ public class ImportSpreadsheet {
                                 for (int i = 0; i < authors.length; i++) {
                                     authors[i] = authors[i].replace(" and ", "");
                                 }
-                                //book.setAuthor(authors);
+                                book.setAuthor(authors);
                                 break;
                             case 3:
                                 book.setSemester(string);

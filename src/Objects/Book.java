@@ -12,7 +12,7 @@ public class Book implements Serializable {
 
     private long isbn;
     private String bookName;
-    private String author;
+    private String[] author;
     private String semester;
     private String course;
     private int section;
@@ -46,11 +46,11 @@ public class Book implements Serializable {
         this.bookName = bookName;
     }
 
-    public String getAuthor() {
+    public String[] getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(String[] author) {
         this.author = author;
     }
 
