@@ -28,5 +28,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.41" level="application_server_libraries" />
     <orderEntry type="library" name="net.sf.opencsv:opencsv:2.3" level="project" />
+    <orderEntry type="library" name="com.sun.mail:javax.mail:1.6.0-rc1" level="project" />
   </component>
 </module>

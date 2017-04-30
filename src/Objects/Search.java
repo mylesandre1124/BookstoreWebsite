@@ -139,20 +139,27 @@ public class Search {
     public ArrayList<Book> deleteDuplicates(ArrayList<Book> books) {
         TreeMap<Long, Book> check = new TreeMap<>();
         ArrayList<Book> results = new ArrayList<>();
-        if(!books.isEmpty()) {
-            for (int i = 0; i < books.size(); i++) {
-                //System.out.println(books.get(i).getIsbn());
-                check.put(books.get(i).getIsbn(), books.get(i));
+        try {
+            if (!books.isEmpty()) {
+                for (int i = 0; i < books.size(); i++) {
+                    //System.out.println(books.get(i).getIsbn());
+                    check.put(books.get(i).getIsbn(), books.get(i));
+                }
+                Set set = check.entrySet();
+                Iterator iterator = set.iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry entry = (Map.Entry) iterator.next();
+                    Book book = (Book) entry.getValue();
+                    results.add(book);
+                }
             }
-            Set set = check.entrySet();
-            Iterator iterator = set.iterator();
-            while (iterator.hasNext()) {
-                Map.Entry entry = (Map.Entry) iterator.next();
-                Book book = (Book) entry.getValue();
-                results.add(book);
-            }
+            return results;
+
         }
-        return results;
+        catch (NullPointerException ex)
+        {
+            return results;
+        }
     }
 
     public TreeMap<String, ArrayList<Book>> searchByProfessor(String search) {

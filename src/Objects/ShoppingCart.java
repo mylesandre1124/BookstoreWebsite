@@ -31,7 +31,7 @@ public class ShoppingCart {
     public ShoppingCart(Book a, int quantity, int type) { //constructor that allows the immediate adding of a book to the cart
         //with this constructor, the only items in the cart are the total quantity
         double tempPrice;
-        switch (type) { // adds the price of the books passed to the subtotal price
+        switch (type) { // adds the price o// f the books passed to the subtotal price
             case 1:
                 tempPrice = a.getNewPrice();
                 subtotalPrice = tempPrice * quantity;

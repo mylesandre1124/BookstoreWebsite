@@ -1,4 +1,4 @@
-<%--Created by IntelliJ IDEA.
+<%@ page import="Objects.Book" %><%--Created by IntelliJ IDEA.
 User: Myles
 Date: 4/15/17
 Time: 7:44 PM
@@ -20,7 +20,9 @@ To change this template use File | Settings | File Templates.
 </tr>
 <% for (int i = 0; i < 10; i++) {
     out.println("</br>");
-} %>
+}
+//session.setAttribute("loggedIn", new Boolean(null));
+%>
 
 <div class="SearchForms">
     <form name="searchForm" action="/Controller" method="post">
