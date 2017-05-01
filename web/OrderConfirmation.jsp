@@ -90,10 +90,10 @@
     </style>
 </table>
 <form name="updateInfo" action="OrderInformation.jsp" method="get">
-    <input type="submit" name="updateInfo" value="Edit Information">
+    <input type="submit" name="updateInfo" value="Edit Information" align="center">
 </form>
 <form name="updateCart" action="shoppingCart.jsp" method="get">
-    <input type="submit" name="update" value="Edit Cart">
+    <input type="submit" name="updateCart" value="Edit Cart" align="center">
 </form>
 </body>
 </html>

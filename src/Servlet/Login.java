@@ -31,14 +31,14 @@ public class Login extends HttpServlet {
             session.setAttribute("student", student);
             try {
                 session.setAttribute("loggedIn", true);
-                //ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-                //double price = Double.parseDouble(cart.getTotalPrice());
-                double price = 600.0;
+                ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+                double price = Double.parseDouble(cart.getTotalPrice());
                 if (student.getAidAmount() >= price)
                 {
                     out.println(student.getFirstName());
                     out.println(student.getAidAmount());
                     out.println("Enough");
+                    response.sendRedirect("OrderConfirmation.jsp");
                 }
                 else {
                     session.setAttribute("finaid", false);

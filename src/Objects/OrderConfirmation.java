@@ -20,6 +20,18 @@ public class OrderConfirmation {
         this.student = student;
     }
 
+    public ShoppingCart getCart() {
+        return cart;
+    }
+
+    public OrderInfoHandler getOrderInfo() {
+        return orderInfo;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
     public Double finalStudentCheckout() throws FileNotFoundException {
         Double totalPrice = Double.parseDouble(cart.getTotalPrice());
         student.changeFinancialAid(totalPrice);
