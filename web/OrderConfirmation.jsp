@@ -25,12 +25,24 @@
 <body>
 <a href ="http://localhost:8080/index.jsp"><img src="image/images/ksu (1).png" width = "350" height = "100" alt = "Kennesaw Logo"></a>
 <table align="center">
+    <thead>Items Ordered:</thead>
+    <tr>
+        <th>Book Cover</th>
+        <th>Book Title</th>
+        <th>Book Type</th>
+        <th>Total Price</th>
+        <th>Quantity</th>
+
+    </tr>
+
     <%
         for (int i = 0; i < cart.size(); i++) {
             Book book = cart.getBook(i);
         %>
-    <thead>Items Ordered:</thead>
     <tr>
+        <td>
+            <img src="image/images/<%=book.getIsbnForCovers()%>.jpg" width = "170" height = "275">
+        </td>
         <td>
             <%out.println(book.getBookName());%>
         </td>
@@ -79,7 +91,7 @@
         }
     %>
     <style>
-        table, td {
+        table, td, th {
             border: 1px solid black;
             border-collapse: collapse;
         }
@@ -94,6 +106,9 @@
 </form>
 <form name="updateCart" action="shoppingCart.jsp" method="get">
     <input type="submit" name="updateCart" value="Edit Cart" align="center">
+</form>
+<form name="checkout" action="ConfirmationController" method="post">
+    <input type="submit" name="checkout" value="Checkout" align="center">
 </form>
 </body>
 </html>

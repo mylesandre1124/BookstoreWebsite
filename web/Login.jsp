@@ -28,6 +28,10 @@
                         <meta http-equiv="Refresh" content="10;url=OrderInformation.jsp">
                         <%
                     }
+                    else if(finaid)
+                    {
+                        response.sendRedirect("OrderConfirmation.jsp");
+                    }
                 }
                 catch (NullPointerException ex)
                 {}

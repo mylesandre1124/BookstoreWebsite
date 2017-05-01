@@ -80,4 +80,14 @@ public class Student implements Serializable {
         }
     }
 
+    public boolean isEmpty()
+    {
+        if(firstName == null & lastName == null & username == null & password == null & new Double(aidAmount) == null)
+        {
+            return true;
+        }
+        {
+            return false;
+        }
+    }
 }

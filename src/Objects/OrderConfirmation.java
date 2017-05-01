@@ -71,11 +71,26 @@ public class OrderConfirmation {
         try {
             finalStudentCheckout();
             changeBooks();
+            ReceiptHandler receipt = new ReceiptHandler();
+            String msg = receipt.htmlMessage(this);
+            receipt.toEmail(msg);
         }
         catch (StockException ex)
         {
             ex.printStackTrace();
         }
+    }
 
+    public void checkout() throws FileNotFoundException {
+        try {
+            changeBooks();
+            ReceiptHandler receipt = new ReceiptHandler();
+            String msg = receipt.htmlMessage(this);
+            receipt.toEmail(msg);
+        }
+        catch (StockException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 }

@@ -22,7 +22,13 @@ public class StudentsDatabase {
         }
         else if(studentsFile.exists())
         {
-            students = (TreeMap<String, Student>)objectIO.readObject();
+            try {
+                students = (TreeMap<String, Student>) objectIO.readObject();
+            }
+            catch (ClassCastException ex)
+            {
+                reset();
+            }
         }
     }
 

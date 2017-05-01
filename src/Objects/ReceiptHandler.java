@@ -5,6 +5,9 @@ import com.sun.org.apache.xpath.internal.operations.Mult;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,11 +39,11 @@ public class ReceiptHandler {
         message += "<br><th>Unit Price</th>";
         message += "<br><th>Total Price</th>";
         message += "<br></tr>";
-        message += "<tr>";
         ShoppingCart cart = orderConfirm.getCart();
         for (int i = 0; i < cart.size(); i++) {
+            message += "<tr>";
             message += "<br><td>" + cart.getBookQuantity(i) + "</td>";
-            message += "<br><td>" + cart.getBook(i).getDescription()+ "</td>";
+            message += "<br><td>" + cart.getBook(i).getBookName()+ "</td>";
             String type = "";
             DecimalFormat format = new DecimalFormat("#.00");
             double price = 0;
@@ -55,17 +58,17 @@ public class ReceiptHandler {
                 case 2:
                     type = "Used";
                     price = cart.getBookQuantity(i) * cart.getBook(i).getUsedPrice();
-                    unitPrice = cart.getBook(i).getNewPrice();
+                    unitPrice = cart.getBook(i).getUsedPrice();
                     break;
                 case 3:
                     type = "Rental";
                     price = cart.getBookQuantity(i) * cart.getBook(i).getRentalPrice();
-                    unitPrice = cart.getBook(i).getNewPrice();
+                    unitPrice = cart.getBook(i).getRentalPrice();
                     break;
                 case 4:
                     type = "Ebook";
                     price = cart.getBookQuantity(i) * cart.getBook(i).getEbookPrice();
-                    unitPrice = cart.getBook(i).getNewPrice();
+                    unitPrice = cart.getBook(i).getEbookPrice();
                     break;
             }
             message += "<br><td>" + type +"</td>";
@@ -76,17 +79,47 @@ public class ReceiptHandler {
         message += "</table>";
         message += "<br><b>Subtotal:</b> $" + cart.getSubtotal();
         message += "<br><b>Tax:</b> $" + cart.getCalcTax();
-        message += "<br><b>Shipping:</b> $" + cart.getShipping();
+        message += "<br><b>Shipping:</b> $" + new DecimalFormat("#.00").format(cart.getShipping());
         message += "<br><b>Total:</b> $" + cart.getTotalPrice();
 
-
-
+        if(!orderConfirm.getStudent().isEmpty()) {
+            message += "<br>You now have: $" + new DecimalFormat("#.00").format(orderConfirm.getStudent().getAidAmount());
+            message += " in financial aid.";
+        }
 
         message += "<br><br><br>Thank You for shopping with the Kennesaw State University Bookstore!";
 
 
         return message;
     }
+
+    public String toTextFile(OrderConfirmation orderConfirm) throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter("receipt.txt", "UTF-8");
+        String message = "Order Submitted\n";
+        message += "Invoice: " + new SimpleDateFormat().format(new Date())+ "\n\n";
+        message += "Bill To:\n";
+        message += orderConfirm.getOrderInfo().getBillingName() + "\n";
+        message += orderConfirm.getOrderInfo().getBillingAddress()+ "\n";
+        message += orderConfirm.getOrderInfo().getBillingCity() + ", ";
+        message += orderConfirm.getOrderInfo().getBillingState() + " ";
+        message += orderConfirm.getOrderInfo().getBillingZip() + "\n\n";
+        message += "Ship To:\n";
+        message += orderConfirm.getOrderInfo().getShippingName() + "\n";
+        message += orderConfirm.getOrderInfo().getShippingAddress() + "\n";
+        message += orderConfirm.getOrderInfo().getShippingCity() + ", ";
+        message += orderConfirm.getOrderInfo().getShippingState() + " ";
+        message += orderConfirm.getOrderInfo().getShippingZip() + "\n";
+        ShoppingCart cart = orderConfirm.getCart();
+        message += "Subtotal: $" + cart.getSubtotal() + "\n";
+        message += "Tax: $" + cart.getCalcTax() + "\n";
+        message += "Shipping: $" + new DecimalFormat("#.00").format(cart.getShipping()) + "\n";
+        message += "Total: $" + cart.getTotalPrice() + "\n";
+        message += "Thank you for shopping with with Kennesaw State University Bookstore!";
+        writer.println(message);
+        writer.close();
+        return message;
+    }
+
 
     public void toEmail(String msg)
     {
@@ -107,6 +140,7 @@ public class ReceiptHandler {
                 });
 
         try {
+            System.out.println("Email");
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("mylesandre1124@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
@@ -123,7 +157,8 @@ public class ReceiptHandler {
         }
     }
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
         ReceiptHandler receipt = new ReceiptHandler();
         OrderInfoHandler orderInfoHandler = new OrderInfoHandler();
         orderInfoHandler.setShippingName("Myles");
@@ -135,8 +170,9 @@ public class ReceiptHandler {
         ShoppingCart cart = new ShoppingCart();
         BooksDatabase books = new BooksDatabase(new File("books.bks"));
         for (int i = 0; i < 4; i++) {
-            cart.addToCart(books.getBooks().get(i), 1, 2);
+            cart.addToCart(books.getBooks().get(i), 2, 2);
         }
-        receipt.toEmail(receipt.htmlMessage(new OrderConfirmation(cart, orderInfoHandler, new Student())));
+        Student student = new StudentsDatabase().getStudents().get("jwins22");
+        System.out.println(receipt.toTextFile(new OrderConfirmation(cart, orderInfoHandler, student)));
     }
 }

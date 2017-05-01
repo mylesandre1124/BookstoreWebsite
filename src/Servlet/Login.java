@@ -38,6 +38,7 @@ public class Login extends HttpServlet {
                     out.println(student.getFirstName());
                     out.println(student.getAidAmount());
                     out.println("Enough");
+                    session.setAttribute("finaid", true);
                     response.sendRedirect("OrderConfirmation.jsp");
                 }
                 else {
