@@ -1,4 +1,7 @@
-<%--
+<%@ page import="Objects.Student" %>
+<%@ page import="Objects.ShoppingCart" %>
+<%@ page import="Objects.StudentsDatabase" %>
+<%@ page import="java.util.TreeMap" %><%--
   Created by IntelliJ IDEA.
   User: Myles
   Date: 4/27/17
@@ -12,6 +15,7 @@
 </head>
 
     <h1>Financial Aid Login</h1>
+    <a href="shoppingCart.jsp"><img src="image/images/cart.png" alt="cart" width="80" height ="80"/></a>
     <body>
     <%
         boolean loggedIn;
@@ -25,12 +29,28 @@
                     {
                         out.println("You do not have enough financial aid for this purchase. This page will automatically redirect in 10 seconds");
                         %>
-                        <meta http-equiv="Refresh" content="10;url=OrderInformation.jsp">
+                        <meta http-equiv="Refresh" content="10;url=paymentInfo.jsp">
                         <%
                     }
                     else if(finaid)
                     {
-                        response.sendRedirect("OrderConfirmation.jsp");
+                        Student student = (Student) session.getAttribute("student");
+                        StudentsDatabase students = new StudentsDatabase();
+                        TreeMap<String, Student > db = students.getStudents();
+                        Student newStudent = db.get(student.getUsername());
+                        ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+                        boolean doubleCheck = newStudent.checkFinancialAid(Double.parseDouble(cart.getTotalPrice()));
+                        if(doubleCheck)
+                        {
+                            response.sendRedirect("OrderConfirmation.jsp");
+                        }
+                        else if(!doubleCheck)
+                        {
+                            out.println("You do not have enough financial aid for this purchase. This page will automatically redirect in 10 seconds");
+                            %>
+                            <meta http-equiv="Refresh" content="10;url=paymentInfo.jsp">
+                            <%
+                        }
                     }
                 }
                 catch (NullPointerException ex)

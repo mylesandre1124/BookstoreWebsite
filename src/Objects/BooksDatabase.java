@@ -54,6 +54,8 @@ public class BooksDatabase {
             if (getBooks().get(i).getIsbn() == book.getIsbn()) {
                 getBooks().remove(i);
                 getBooks().add(i, book);
+                //System.out.println(book.getNewQuantity());
+                System.out.println(getBooks().get(i).getRentalQuantity());
             }
         }
         String filename = bookFile.getName();

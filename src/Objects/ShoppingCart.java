@@ -11,7 +11,7 @@ public class ShoppingCart {
     //integers needs to be sent at a time. They will be stored in an Array in the same position as the ArrayList that 
     //the book object is in.
     private int numItemsInCart; //displays total num of items in the cart
-    private boolean onlyEbook; //used to determing if shipping needs to be applied (does not with only ebooks)
+    private boolean onlyEbook; //used to determine if shipping needs to be applied (does not with only ebooks)
     private double subtotalPrice; //tracks price without tax and shipping added
     private double totalPrice; //tracks price with shipping and tax added
     private ArrayList<Book> cart = new ArrayList<>(); //used to store Book items in the shopping cart
@@ -31,7 +31,7 @@ public class ShoppingCart {
     public ShoppingCart(Book a, int quantity, int type) { //constructor that allows the immediate adding of a book to the cart
         //with this constructor, the only items in the cart are the total quantity
         double tempPrice;
-        switch (type) { // adds the price o// f the books passed to the subtotal price
+        switch (type) { // adds the price of the books passed to the subtotal price
             case 1:
                 tempPrice = a.getNewPrice();
                 subtotalPrice = tempPrice * quantity;
@@ -136,10 +136,6 @@ public class ShoppingCart {
         return numItemsInCart;
     }
 
-    private void setEbookValue(boolean ebook) { //changes the value of the boolean onlyEbook, false if there is anything but ebooks in the cart.
-        onlyEbook = ebook;
-    }
-
     public String getTotalPrice() { //returns the total price of the items in the cart (shipping and tax included)
         calculateTotalPrice();
         String returnTotalPrice = df.format(totalPrice);
@@ -164,88 +160,6 @@ public class ShoppingCart {
             returnShipping = 0;
             return returnShipping;
         }
-
-    }
-
-    public void addToCart(Book newBook, int quantity, int type) {
-        //adds the book passed to the method to the end of the array list. Will by default add one book,
-        //but can add as many books as specified. This will also check to see if the book is an ebook,
-        // and will adjust the shipping if needed.
-        double tempPrice;
-        switch (type) { //for price tracking
-            case 1:
-                tempPrice = newBook.getNewPrice();
-                subtotalPrice += tempPrice * quantity;
-                break;
-            case 2:
-                tempPrice = newBook.getUsedPrice();
-                subtotalPrice += tempPrice * quantity;
-                break;
-            case 3:
-                tempPrice = newBook.getRentalPrice();
-                subtotalPrice += tempPrice * quantity;
-                break;
-            case 4:
-                tempPrice = newBook.getEbookPrice();
-                subtotalPrice += tempPrice * quantity;
-                break;
-            //TODO: Write Exception handling here
-            default:
-                break;
-        }
-        try {
-            switch (type) {
-                case 1:
-                    if (quantity <= newBook.getNewQuantity()) {
-                        cart.add(newBook);
-                        quantityInCart.add(quantity);
-                        bookType.add(type);
-                        numItemsInCart += quantity;
-                    } else {
-                        //TODO Error message
-                    }
-                    break;
-                case 2:
-                    if (quantity <= newBook.getUsedQuantity()) {
-                        cart.add(newBook);
-                        quantityInCart.add(quantity);
-                        bookType.add(type);
-                        numItemsInCart += quantity;
-                    } else {
-                        //TODO Error message
-                    }
-                    break;
-                case 3:
-                    if (quantity <= newBook.getRentalQuantity()) {
-                        cart.add(newBook);
-                        quantityInCart.add(quantity);
-                        bookType.add(type);
-                        numItemsInCart += quantity;
-                    } else {
-                        //TODO Error message
-                    }
-                    break;
-                case 4:
-                    if (quantity <= newBook.getEbookQuantity()) {
-                        cart.add(newBook);
-                        quantityInCart.add(quantity);
-                        bookType.add(type);
-                        numItemsInCart += quantity;
-                    } else {
-                        //TODO Error message
-                    }
-                    break;
-                default:
-                    break;
-            }
-        } catch (Exception e) {
-            System.out.println("Error Adding to Cart: " + e.getMessage());
-        }
-    }
-
-    public void removeShipping() {
-        //if all regular books are deleted, and only ebooks remain, this should remove the shipping cost from the totalPrice
-        totalPrice -= shippingCost;
     }
 
     public boolean checkForOnlyEbooks() {
@@ -260,6 +174,69 @@ public class ShoppingCart {
             }
         }
         return true;
+    }
+
+    public void addToCart(Book newBook, int quantity, int type) {
+        //adds the book passed to the method to the end of the array list. Will by default add one book,
+        //but can add as many books as specified. This will also check to see if the book is an ebook,
+        // and will adjust the shipping if needed.
+        double tempPrice;
+        try {
+            switch (type) {
+                case 1:
+                    if (quantity <= newBook.getNewQuantity()) {
+                        cart.add(newBook);
+                        quantityInCart.add(quantity);
+                        bookType.add(type);
+                        numItemsInCart += quantity;
+                        tempPrice = newBook.getNewPrice();
+                        subtotalPrice += tempPrice * quantity;
+                    } else {
+                        //TODO Error message
+                    }
+                    break;
+                case 2:
+                    if (quantity <= newBook.getUsedQuantity()) {
+                        cart.add(newBook);
+                        quantityInCart.add(quantity);
+                        bookType.add(type);
+                        numItemsInCart += quantity;
+                        tempPrice = newBook.getUsedPrice();
+                        subtotalPrice += tempPrice * quantity;
+                    } else {
+                        //TODO Error message
+                    }
+                    break;
+                case 3:
+                    if (quantity <= newBook.getRentalQuantity()) {
+                        cart.add(newBook);
+                        quantityInCart.add(quantity);
+                        bookType.add(type);
+                        numItemsInCart += quantity;
+                        tempPrice = newBook.getRentalPrice();
+                        subtotalPrice += tempPrice * quantity;
+                    } else {
+                        //TODO Error message
+                    }
+                    break;
+                case 4:
+                    if (quantity <= newBook.getEbookQuantity()) {
+                        cart.add(newBook);
+                        quantityInCart.add(quantity);
+                        bookType.add(type);
+                        numItemsInCart += quantity;
+                        tempPrice = newBook.getEbookPrice();
+                        subtotalPrice += tempPrice * quantity;
+                    } else {
+                        //TODO Error message
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println("Error Adding to Cart: " + e.getMessage());
+        }
     }
 
     public void removeFromCart(String ISBN, int type) {

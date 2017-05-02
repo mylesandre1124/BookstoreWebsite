@@ -21,7 +21,7 @@ public class ReceiptHandler {
 
     public String htmlMessage(OrderConfirmation orderConfirm)
     {
-        String message = "<h1>Order Submitted</h1>";
+        String message = "<h1><a href = \"http://localhost:8080/\">Order Submitted</a></h1>\n";
         message += "<br><b>Invoice:</b> " + new SimpleDateFormat().format(new Date());
         message += "<br>Bill To:";
         message += "<br>" + orderConfirm.getOrderInfo().getBillingName();
@@ -82,11 +82,12 @@ public class ReceiptHandler {
         message += "<br><b>Shipping:</b> $" + new DecimalFormat("#.00").format(cart.getShipping());
         message += "<br><b>Total:</b> $" + cart.getTotalPrice();
 
-        if(!orderConfirm.getStudent().isEmpty()) {
-            message += "<br>You now have: $" + new DecimalFormat("#.00").format(orderConfirm.getStudent().getAidAmount());
-            message += " in financial aid.";
+        if(orderConfirm.getStudent() != null) {
+            if (!orderConfirm.getStudent().isEmpty()) {
+                message += "<br>You now have: $" + new DecimalFormat("#.00").format(orderConfirm.getStudent().getAidAmount());
+                message += " in financial aid.";
+            }
         }
-
         message += "<br><br><br>Thank You for shopping with the Kennesaw State University Bookstore!";
 
 
@@ -113,7 +114,13 @@ public class ReceiptHandler {
         message += "Subtotal: $" + cart.getSubtotal() + "\n";
         message += "Tax: $" + cart.getCalcTax() + "\n";
         message += "Shipping: $" + new DecimalFormat("#.00").format(cart.getShipping()) + "\n";
-        message += "Total: $" + cart.getTotalPrice() + "\n";
+        message += "Total: $" + cart.getTotalPrice() + "\n\n";
+        if(orderConfirm.getStudent() != null) {
+            if (!orderConfirm.getStudent().isEmpty()) {
+                message += "You now have: $" + new DecimalFormat("#.00").format(orderConfirm.getStudent().getAidAmount());
+                message += " in financial aid.\n\n";
+            }
+        }
         message += "Thank you for shopping with with Kennesaw State University Bookstore!";
         writer.println(message);
         writer.close();

@@ -11,7 +11,7 @@
 <body>
     <table width = "75%">
         <tr>
-            <td width= "75%"><a href="http://localhost:8080/index.jsp"><img src="image/images/ksu (1).png" width="350" height="100" alt="Kennesaw Logo"></a></td>
+            <td width= "75%"><a href="${pageContext.request.contextPath}/index.jsp"><img src="image/images/ksu (1).png" width="350" height="100" alt="Kennesaw Logo"></a></td>
             <td width="25%">
                 <a href="shoppingCart.jsp"><img src="image/images/cart.png" alt="cart" width="80" height ="80"/></a>
             </td>
@@ -126,6 +126,11 @@
                     <input type='text' name='shippingZip' value='' placeholder='Zip Code'/>
                 </td>
             </tr>
+            <tr>
+                <br>
+                <td><p style="text-align: right"> Email:</p></td>
+                <td> <input type="email" name='email' value='' placeholder='Email Address'></td>
+            </tr>
         </table>
 
         <pre>           <input type="checkbox" name="shippingAsBilling" value="yes"> Shipping Address is same as Billing address </pre>
@@ -234,7 +239,7 @@
                     <p style="text-align: right"> Zip:</p>
                 </td>
                 <td>
-                    <input type='text' name='billingZip' value='' placeholder='Zip Code'/>
+                    <input type='text' name='billingZip' value='' placeholder='Zip Code' maxlength='5'/>
                 </td>
             </tr>
         </table>

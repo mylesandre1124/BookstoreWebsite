@@ -1,5 +1,7 @@
 <%@ page import="Objects.ShoppingCart" %>
-<%@ page import="Objects.Book" %><%--
+<%@ page import="Objects.Book" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="Objects.OrderInfoHandler" %><%--
   Created by IntelliJ IDEA.
   User: Myles
   Date: 4/29/17
@@ -24,8 +26,10 @@
 </head>
 <body>
 <a href ="http://localhost:8080/index.jsp"><img src="image/images/ksu (1).png" width = "350" height = "100" alt = "Kennesaw Logo"></a>
-<table align="center">
-    <thead>Items Ordered:</thead>
+<a href="shoppingCart.jsp"><img src="image/images/cart.png" alt="cart" width="80" height ="80"/></a>
+</br>
+<table class="CartInfo" align="center">
+    <div class="Title"><thead><b>Items Ordered:</b></thead></div>
     <tr>
         <th>Book Cover</th>
         <th>Book Title</th>
@@ -91,24 +95,155 @@
         }
     %>
     <style>
-        table, td, th {
+        table.CartInfo tr, td, th{
             border: 1px solid black;
             border-collapse: collapse;
         }
-        td {
+        td, th {
             padding: 5px;
             text-align: left;
         }
+
     </style>
 </table>
-<form name="updateInfo" action="OrderInformation.jsp" method="get">
-    <input type="submit" name="updateInfo" value="Edit Information" align="center">
-</form>
-<form name="updateCart" action="shoppingCart.jsp" method="get">
-    <input type="submit" name="updateCart" value="Edit Cart" align="center">
-</form>
-<form name="checkout" action="ConfirmationController" method="post">
-    <input type="submit" name="checkout" value="Checkout" align="center">
-</form>
+<table class="PriceInfo" align="center">
+    <tr>
+        <td>
+            <b>Subtotal:</b> $<%=cart.getSubtotal()%>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>Shipping:</b> $<%=new DecimalFormat("#.00").format(cart.getShipping())%>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>Tax:</b> $<%=cart.getCalcTax()%>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>Total:</b> $<%=cart.getTotalPrice()%>
+        </td>
+    </tr>
+</table>
+<div class="CheckoutForms">
+    <form name="updateCart" action="shoppingCart.jsp" method="get">
+        <input type="submit" name="updateCart" value="Edit Cart" align="center">
+    </form>
+    <%
+        OrderInfoHandler order;
+        try {
+            order = (OrderInfoHandler) session.getAttribute("orderInfo");
+        }
+        catch (NullPointerException ex)
+        {
+            order = new OrderInfoHandler();
+        }
+    %>
+    <table class="ShippingInfo" align="center">
+        <th>Shipping Information</th>
+        <tr>
+            <td>
+                <b>Name: </b>
+                <%=
+                    order.getShippingName()
+                %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Address: </b>
+                <%=
+                    order.getShippingAddress()
+                %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Address Line 2: </b>
+                <%=
+                    order.getShippingAddressLine2()
+                %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>City: </b>
+                <%=
+                    order.getShippingCity() + "\n"
+                %>
+                <b>State: </b>
+                <%=
+                    order.getShippingState() + "\n"
+                %>
+                <b>Zip: </b>
+                <%=
+                    order.getShippingZip() + "\n"
+                %>
+            </td>
+        </tr>
+        <th>Billing Information</th>
+        <tr>
+            <td>
+                <b>Name: </b>
+                <%=
+                    order.getBillingName()
+                %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Address: </b>
+                <%=
+                    order.getBillingAddress()
+                %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Address Line 2: </b>
+                <%=
+                    order.getBillingAddressLine2()
+                %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>City: </b>
+                <%=
+                order.getBillingCity() + "\n"
+                %>
+                <b>State: </b>
+                <%=
+                order.getBillingState() + "\n"
+                %>
+                <b>Zip: </b>
+                <%=
+                order.getBillingZip() + "\n"
+                %>
+            </td>
+        </tr>
+    </table>
+    <form name="updateInfo" action="OrderInformation.jsp" method="get">
+        <input type="submit" name="updateInfo" value="Edit Information" align="center">
+    </form>
+    <form name="checkout" action="ConfirmationController" method="post">
+        <input type="submit" name="checkout" value="Place Order" align="center">
+    </form>
+</div>
+<style>
+    .CheckoutForms{
+        text-align: center;
+    }
+    .Title{
+        text-align: center;
+    }
+    .ShippingInfo
+    {
+        text-align: center;
+    }
+</style>
 </body>
 </html>

@@ -16,6 +16,9 @@ public class OrderInfoHandler {
     private String billingCity;
     private int billingZip;
     private String billingState;
+    private String emailAddress;
+    private String paymentChoice;
+
 
     public String getShippingName() {
         return shippingName;
@@ -109,6 +112,14 @@ public class OrderInfoHandler {
         this.billingState = billingState;
     }
 
+    public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress; }
+
+    public String getEmailAddress() { return emailAddress; }
+
+    public void setPaymentChoice(String paymentChoice) { this.paymentChoice = paymentChoice; }
+
+    public String getPaymentChoice() { return paymentChoice; }
+
     public void shippingAsBilling() {
         billingName = shippingName;
         billingAddress = shippingAddress;
@@ -118,5 +129,12 @@ public class OrderInfoHandler {
         billingZip = shippingZip;
     }
 
-
+    public boolean validZip(int zip) {
+        int zipLength = (int)(Math.log10(zip) + 1);
+        if(zipLength != 5) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

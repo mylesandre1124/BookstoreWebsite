@@ -197,7 +197,7 @@ public class Book implements Serializable {
     public void changeRentalQuantity(int orderQuantity) throws StockException {
         StockException stockException = new StockException(getRentalQuantity(), orderQuantity);
         stockException.changeStock();
-        setUsedQuantity(stockException.getNewStock());
+        setRentalQuantity(stockException.getNewStock());
     }
 
     public boolean checkNewQuantity(int orderQuantity) throws StockException {
