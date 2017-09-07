@@ -5,6 +5,7 @@ import Exceptions.StockException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * Created by Myles on 4/28/17.
@@ -99,14 +100,9 @@ public class OrderConfirmation {
     }
 
     public static void main(String[] args) throws StockException {
-        Search search = new Search();
-        Book book = search.searchByISBN(9780123850638L);
-        System.out.println(book.getNewQuantity());
-        book.changeNewQuantity(4);
-        System.out.println(book.getNewQuantity());
-        new BooksDatabase(new File("books.bks")).updateBook(book);
-        Book book1 = search.searchByISBN(9780123850638L);
-        System.out.println("New Final: " + book1.getNewQuantity());
-
+        ObjectIO objectIO = new ObjectIO(new File("students.sts"));
+        TreeMap<String, Student> student = (TreeMap<String, Student>) objectIO.readObject();
+        Student student1 = student.get("twrea24");
+        System.out.println(student1.getAidAmount());
     }
 }

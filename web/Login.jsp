@@ -13,9 +13,16 @@
 <head>
     <title>Login</title>
 </head>
+    <table>
+        <tr>
+            <td width="75%"><a href ="http://localhost:8080/index.jsp"><img src="image/images/ksu (1).png" width = "350" height = "100" alt = "Kennesaw Logo"></a></td>
+            <td width="25%"><a href="shoppingCart.jsp"><img src="image/images/cart.png" alt="cart" width="80" height ="80" align="right"/></a></td>
+        </tr>
+        <tr>
+            <td><h1>Financial Aid Login</h1></td>
+        </tr>
 
-    <h1>Financial Aid Login</h1>
-    <a href="shoppingCart.jsp"><img src="image/images/cart.png" alt="cart" width="80" height ="80"/></a>
+    </table>
     <body>
     <%
         boolean loggedIn;
@@ -64,9 +71,11 @@
         catch (NullPointerException ex)
         {}
     %>
-    <form name="login" method="post" action="/Login">
-        <input name="username" align="center" type="text">
-        <input name="password" align="center" type="password">
+    <form name="login" method="post" action="Login">
+        <input name="username" align="center" type="text" placeholder="Username:">
+        </br></br>
+        <input name="password" align="center" type="password" placeholder="Password:">
+        </br></br>
         <input name="submit" value="Submit" type="submit">
     </form>
     </body>
