@@ -19,6 +19,34 @@ import java.util.Random;
  */
 public class ReceiptHandler {
 
+    private String emailAddress;
+    private String emailPassword;
+    private String outputEmail;
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getEmailPassword() {
+        return emailPassword;
+    }
+
+    public void setEmailPassword(String emailPassword) {
+        this.emailPassword = emailPassword;
+    }
+
+    public String getOutputEmail() {
+        return outputEmail;
+    }
+
+    public void setOutputEmail(String outputEmail) {
+        this.outputEmail = outputEmail;
+    }
+
     public String htmlMessage(OrderConfirmation orderConfirm)
     {
         String message = "<h1><a href = \"http://localhost:8080/\">Order Submitted</a></h1>\n";
@@ -130,8 +158,6 @@ public class ReceiptHandler {
 
     public void toEmail(String msg)
     {
-        final String username = "mylesandre1124@gmail.com";
-        final String password = "megamacman1124";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -142,16 +168,16 @@ public class ReceiptHandler {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(getEmailAddress(), getEmailPassword());
                     }
                 });
 
         try {
             System.out.println("Email");
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("mylesandre1124@gmail.com"));
+            message.setFrom(new InternetAddress(""));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("mylesandre1124@gmail.com"));
+                    InternetAddress.parse(getOutputEmail()));
             message.setSubject("Receipt");
             message.setContent(msg, "text/html");
             //message.setText(msg);
